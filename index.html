@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dong Nai With Leeo</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      /* Đổi sang Science Gothic */
+      font-family: "Science Gothic", sans-serif; 
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #10B981;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0d9966;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('a1.png');
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), #000);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-content.fade-out {
+      opacity: 0;
+    }
+
+    .hero h1 {
+      font-family: 'Science Gothic', serif;
+      font-size: clamp(3rem, 12vw, 10rem);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      
+      /* 👇 QUAN TRỌNG: Ẩn đi và tắt animation tự chạy */
+      opacity: 0; 
+      /* animation: slideUp ... (BỎ DÒNG NÀY ĐI HOẶC COMMENT LẠI) */
+      
+      transition: opacity 0.5s ease; /* Thêm cái này để lúc hiện lên nó mượt */
+    }
+
+    .hero-divider {
+      width: 8rem;
+      height: 4px;
+      background: #10B981;
+      margin: 1.5rem auto;
+      animation: expandWidth 1s ease-out 0.2s both;
+    }
+
+    .hero p {
+      font-size: clamp(1.25rem, 4vw, 2rem);
+      color: #10B981;
+      letter-spacing: 0.15em;
+      font-weight: 300;
+      margin-top: 1rem;
+      
+      /* 👇 QUAN TRỌNG */
+      opacity: 0;
+      /* animation: slideUp ... (BỎ) */
+      transition: opacity 0.5s ease;
+    }
+
+    .hero-subtitle {
+      margin-top: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: #b3b3b3;
+      font-weight: 300;
+      max-width: 600px;
+      line-height: 1.6;
+      
+      /* 👇 QUAN TRỌNG */
+      opacity: 0;
+      /* animation: slideUp ... (BỎ) */
+      transition: opacity 0.5s ease;
+    }
+    
+    /* Riêng cái gạch ngang và mũi tên thì cho nó hiện sau cũng được */
+    .hero-divider, .scroll-indicator {
+        opacity: 0;
+        transition: opacity 1s ease 1s; /* Delay 1s rồi mới hiện */
+    }
+    
+    /* Class này sẽ được JS thêm vào để bật hiển thị */
+    .hero-active .hero-divider, 
+    .hero-active .scroll-indicator {
+        opacity: 1;
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      animation: slideUp 1s ease-out 0.8s both;
+    }
+
+    .chevron {
+      width: 2rem;
+      height: 2rem;
+      color: #10B981;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes expandWidth {
+      from {
+        width: 0;
+      }
+      to {
+        width: 8rem;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* About Section */
+    .about {
+      position: relative;
+      padding: 8rem 2rem;
+      background: linear-gradient(135deg, #000 0%, rgba(30, 58, 138, 0.1) 50%, #000 100%);
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: '';
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      width: 24rem;
+      height: 24rem;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .about::after {
+      content: '';
+      position: absolute;
+      bottom: 25%;
+      right: 25%;
+      width: 24rem;
+      height: 24rem;
+      background: radial-gradient(circle, rgba(30, 58, 138, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .about-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Science Gothic', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header .divider {
+      width: 6rem;
+      height: 3px;
+      background: #10B981;
+      margin: 1.5rem auto;
+    }
+
+    .section-header p {
+      font-size: 1.125rem;
+      color: #b3b3b3;
+      max-width: 48rem;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+/* --- TÍNH NĂNG CARD (PHIÊN BẢN NEON APPLE ĐỈNH CAO) --- */
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    /* 1. Thẻ Card: Cấu hình chính */
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      opacity: 0;
+      transform: translateY(30px);
+      position: relative; /* Quan trọng để chứa neon */
+      overflow: hidden; /* QUAN TRỌNG: Đóng khung ánh sáng lại */
+      
+      /* Thêm thuộc tính cho link */
+      text-decoration: none; /* Bỏ gạch chân */
+      color: white; /* Chữ luôn màu trắng */
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Lớp Neon: Hào quang Apple Cầu Vồng (Giờ đã tỏa ra ngoài) */
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400%;
+      z-index: -1;
+      filter: blur(20px); /* Độ nhòe */
+      opacity: 0; /* Ẩn đi khi chưa hover */
+      transition: opacity 0.3s ease;
+    }
+
+    /* Khi di chuột vào thì hiện Neon */
+    .feature-card:hover::before {
+      opacity: 1;
+      animation: neonFlow 20s linear infinite;
+    }
+    /* KHI DI CHUỘT VÀO: BẬT ĐÈN NEON */
+    .feature-card:hover {
+        background: rgba(0,0,0,0.6);
+        border-color: transparent;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1; /* Bật sáng */
+      filter: blur(20px); /* Tỏa sáng mạnh hơn */
+      animation: neonFlow 20s linear infinite; /* Màu chảy */
+    }
+    
+    /* Animation màu chảy */
+    @keyframes neonFlow {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    /* --- TẠO DẢI MÀU NEON (BÍ KÍP MỚI) --- */
+
+    /* Lớp Neon 1: Màu Xanh Ngọc chủ đạo (To và mờ) */
+    /* Lớp Neon 1: Màu Cầu Vồng Apple (Rực rỡ và ảo diệu) */
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%; bottom: -20%;
+      width: 60%; /* Cho rộng hơn xíu để thấy rõ dải màu */
+      
+      /* DẢI MÀU APPLE HUYỀN THOẠI ĐÂY: */
+      /* Thứ tự: Cam -> Vàng -> Đỏ -> Hồng -> Tím -> Xanh Dương */
+      background: linear-gradient(
+        135deg, 
+        rgba(252, 163, 17, 0.5),  /* Cam */
+        rgba(255, 214, 10, 0.5),  /* Vàng */
+        rgba(240, 51, 72, 0.5),   /* Đỏ */
+        rgba(232, 51, 137, 0.5),  /* Hồng */
+        rgba(136, 65, 184, 0.5),  /* Tím */
+        rgba(29, 83, 231, 0.4),   /* Xanh dương */
+        transparent               /* Tan biến dần */
+      );
+      
+      filter: blur(50px); /* Làm nhòe tạo quầng sáng */
+      z-index: -1; 
+      opacity: 0.7; /* Độ sáng vừa phải */
+      
+      transform: skewX(-15deg) translateX(0); 
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Lớp Neon 2: Điểm nhấn sáng (Nhỏ hơn, sắc nét hơn xíu) */
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; height: 100%;
+      width: 20%;
+      
+      /* Một vệt sáng trắng xanh nhẹ ở cạnh phải */
+      background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+      filter: blur(20px);
+      z-index: -1;
+      opacity: 0.6;
+      transform: translateX(0);
+      transition: all 0.8s ease; /* Chạy chậm hơn lớp kia 1 xíu cho có chiều sâu */
+    }
+
+
+    /* --- HIỆU ỨNG KHI DI CHUỘT VÀO (HOVER) --- */
+
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card:hover {
+      /* Rút padding về -> Nội dung lướt ra giữa */
+      padding-right: 2rem; 
+      
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08); /* Nền xanh nhẹ khi hover */
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4); /* Thêm bóng đổ cho nổi */
+    }
+
+    /* KHI HOVER: ĐẨY DẢI MÀU NEON BAY ĐI CHỖ KHÁC */
+    .feature-card:hover::before {
+      /* Bay sang phải 300px và mờ dần */
+      transform: skewX(-15deg) translateX(300px); 
+      opacity: 0;
+    }
+    
+    .feature-card:hover::after {
+      /* Bay sang phải 200px và mờ dần */
+      transform: translateX(200px);
+      opacity: 0;
+    }
+
+
+    /* 3. Icon, Tiêu đề, Chữ (Giữ nguyên như cũ nhưng thêm z-index để nổi lên trên neon) */
+    .feature-icon {
+      width: 4rem;
+      height: 4rem;
+      margin: 0 auto 1.5rem auto; 
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      transition: all 0.6s ease;
+      position: relative; z-index: 2; /* Nổi lên trên neon */
+    }
+
+    .feature-card:hover .feature-icon {
+      background: #10B981; 
+      color: #000;
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.7);
+      transform: scale(1.1) rotate(370deg);
+    }
+
+    .feature-card h3 {
+      font-family: 'Science Gothic', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      position: relative; z-index: 2; /* Nổi lên trên neon */
+    }
+
+    .feature-card:hover h3 {
+      color: #10B981;
+    }
+
+    .feature-card p {
+      color: #999;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin: 0 auto;
+      position: relative; z-index: 2; /* Nổi lên trên neon */
+    }
+/* --- DESTINATIONS: PHIÊN BẢN BAY LÊN + NEON APPLE GLOW --- */
+    .destinations {
+      position: relative;
+      padding: 8rem 2rem;
+      background: linear-gradient(to bottom, #000, #111, #000);
+      /* Đảm bảo phần này nằm trên các layer nền khác để glow không bị che */
+      z-index: 10; 
+    }
+
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem; /* Tăng khoảng cách ra xíu để ánh sáng có chỗ tỏa */
+      margin-top: 3rem;
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* 1. THẺ CARD CHÍNH */
+    .destination-card {
+      position: relative;
+      height: 500px;
+      border-radius: 1.5rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(50px);
+      
+      /* QUAN TRỌNG: Cho phép ánh sáng lòi ra ngoài */
+      overflow: visible; 
+      
+      /* Chuyển động bay lên mượt mà */
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+/* 1. THẺ CARD CHÍNH */
+    .destination-card {
+       /* ... các dòng code cũ ... */
+       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    } /* <-- Dấu ngoặc đóng của thẻ cũ */
+
+    /* --- DÁN ĐOẠN NÀY VÀO ĐÂY NÈ --- */
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 1.5rem; 
+      overflow: hidden; /* CẮT BỎ PHẦN ẢNH LÒI RA */
+      z-index: 2; 
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+    
+    /* Sau đó mới đến đoạn code tiếp theo (như .destination-card.visible ...) */
+    .destination-card.visible {
+      /* ... */
+    }
+
+    /* Khi thẻ hiện ra (JS kích hoạt) */
+    .destination-card.visible {
+      animation: slideUp 0.8s ease-out forwards;
+    }
+    
+    /* Animation delay cho so le đẹp mắt */
+    .destination-card:nth-child(2).visible { animation-delay: 0.2s; }
+    .destination-card:nth-child(3).visible { animation-delay: 0.4s; }
+
+    /* 2. TẠO VẦNG HÀO QUANG NEON (APPLE GLOW) - NẰM SAU THẺ */
+    .destination-card::before {
+      content: '';
+      position: absolute;
+      /* To hơn thẻ thật một chút (âm 5px) để tạo viền sáng */
+      top: -5px; left: -5px; right: -5px; bottom: -5px;
+      
+      /* Gradient Apple Cầu Vồng */
+      background: linear-gradient(
+        45deg,
+        #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000
+      );
+      background-size: 400%; /* Để màu có thể chảy nếu muốn */
+      
+      border-radius: 1.8rem; /* Bo tròn theo thẻ */
+      z-index: -1; /* Đẩy ra sau lưng */
+      filter: blur(25px); /* Làm nhòe mạnh để tạo quầng sáng */
+      
+      opacity: 0; /* Mặc định tắt đèn */
+      transition: opacity 0.5s ease;
+    }
+
+    /* 3. HIỆU ỨNG BAY LÊN KHI DI CHUỘT (HOVER) */
+    .destination-card.visible:hover {
+      /* Bay lên cao 15px và phóng to nhẹ */
+      transform: translateY(-15px) scale(1.02); 
+    }
+
+    .destination-card:hover::before {
+      opacity: 0.8; /* Bật đèn Neon rực rỡ */
+      animation: neonFlow 20s linear infinite; /* Làm màu chảy chầm chậm */
+    }
+
+    @keyframes neonFlow {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    /* 4. HÌNH ẢNH NỀN (Cần bo tròn riêng vì thẻ cha đã bỏ overflow: hidden) */
+    .destination-image {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      border-radius: 1.5rem; /* Tự bo tròn ảnh */
+      overflow: hidden; /* Cắt ảnh dư thừa */
+      transition: transform 0.7s ease;
+      
+      /* Thêm cái này để ảnh không bị lòi ra ngoài bo tròn trên Safari/Chrome */
+      -webkit-mask-image: -webkit-radial-gradient(white, black); 
+    }
+
+    .destination-card:hover .destination-image {
+      transform: scale(1.1); /* Zoom ảnh bên trong */
+    }
+
+    /* 5. CÁC PHẦN CÒN LẠI (GIỮ NGUYÊN HOẶC TINH CHỈNH NHẸ) */
+    .destination-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2), transparent);
+      z-index: 2;
+      border-radius: 1.5rem;
+      pointer-events: none; /* Để chuột xuyên qua chạm vào card */
+    }
+
+    .destination-content {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%;
+      padding: 2rem;
+      z-index: 3;
+    }
+
+    .destination-icon {
+      width: 4rem; height: 4rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 1rem;
+      transition: transform 0.5s ease;
+    }
+    
+    /* Icon nhảy lên vui vui khi hover */
+    .destination-card:hover .destination-icon {
+      transform: scale(1.1) rotate(10deg);
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Màu icon theo từng loại */
+    .destination-card[data-color="emerald"] .destination-icon { color: #10B981; border-color: #10B981; }
+    .destination-card[data-color="river"] .destination-icon { color: #3b82f6; border-color: #3b82f6; }
+    .destination-card[data-color="sunset"] .destination-icon { color: #f97316; border-color: #f97316; }
+
+    .destination-info {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      
+      /* Hiệu ứng kéo dãn */
+      transform: translateY(1rem);
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      max-height: 80px; /* Chiều cao lúc chưa hover */
+      overflow: hidden;
+    }
+
+    /* Khi hover: Kéo bảng thông tin lên */
+    .destination-card:hover .destination-info {
+      transform: translateY(0);
+      max-height: 250px; /* Mở rộng chiều cao để hiện chữ */
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .destination-title {
+      font-family: 'Science Gothic', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .destination-description {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+      
+      /* Hiệu ứng hiện chữ */
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease 0.1s; /* Delay xíu cho mượt */
+    }
+
+    .destination-card:hover .destination-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .destination-description {
+      color: #d0d0d0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+      opacity: 0;
+      max-height: 0;
+      transition: all 0.5s ease;
+    }
+
+    .destination-card:hover .destination-description {
+      opacity: 1;
+      max-height: 100px;
+    }
+
+    /* Gallery Section */
+    .gallery {
+      position: relative;
+      padding: 8rem 2rem;
+      background: linear-gradient(to bottom, #000, rgba(30, 58, 138, 0.1), #000);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-auto-rows: 200px;
+      gap: 1rem;
+      margin-top: 3rem;
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(0.9);
+    }
+/* --- CSS CHO VIDEO TRONG GALLERY --- */
+    .gallery-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Cắt video cho vừa khít ô vuông, không bị méo */
+      z-index: 0; /* Nằm dưới lớp phủ đen mờ */
+      border-radius: 1rem; /* Bo góc y hệt khung cha */
+    }
+    .gallery-item.visible {
+      animation: slideUp 0.6s ease-out forwards;
+    }
+
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; animation-delay: 0s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(4) { grid-column: span 2; grid-row: span 2; animation-delay: 0.3s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(6) { grid-column: span 2; grid-row: span 2; animation-delay: 0.5s; }
+    .gallery-item:nth-child(7) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(8) { animation-delay: 0.7s; }
+    /* Làm cho ảnh số 9, 13, 16 to bự (2x2) để tạo điểm nhấn */
+    .gallery-item:nth-child(9)  { grid-column: span 2; grid-row: span 2; animation-delay: 0.1s; }
+    .gallery-item:nth-child(13) { grid-column: span 2; grid-row: span 2; animation-delay: 0.3s; }
+    .gallery-item:nth-child(16) { grid-column: span 2; grid-row: span 2; animation-delay: 0.5s; }
+
+    /* Các ảnh còn lại tự động nhỏ, mình chỉnh delay cho nó hiện ra lần lượt cho đẹp */
+    .gallery-item:nth-child(10) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(11) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(12) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(14) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(15) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(17) { animation-delay: 0.7s; }
+    .gallery-item:nth-child(18) { animation-delay: 0.8s; }
+    /* --- ĐỢT 3: 10 TẤM TIẾP THEO (19 -> 28) --- */
+    
+    /* Mình chọn tấm 20 và 25 làm ĐIỂM NHẤN (To bự) */
+    .gallery-item:nth-child(20) { grid-column: span 2; grid-row: span 2; animation-delay: 0.2s; }
+    .gallery-item:nth-child(25) { grid-column: span 2; grid-row: span 2; animation-delay: 0.4s; }
+
+    /* Các tấm còn lại nhỏ xinh */
+    .gallery-item:nth-child(19) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(21) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(22) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(23) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(24) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(26) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(27) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(28) { animation-delay: 0.7s; }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-caption {
+      font-family: 'Science Gothic', serif;
+      font-size: 1.25rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+ /* --- CSS MODAL MỚI: GIỮ BO GÓC & CHỮ KHÔNG MẤT --- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* KHUNG CỐ ĐỊNH BO GÓC */
+    .modal-frame {
+      position: relative;
+      max-height: 80vh; max-width: 90vw;
+      border-radius: 1.5rem; /* Bo góc cố định ở đây */
+      overflow: hidden; /* Cắt bỏ phần ảnh tràn ra khi zoom */
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    .modal-image {
+      display: block;
+      width: auto; height: auto;
+      max-height: 80vh; max-width: 90vw;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.1s linear; 
+      transform-origin: center center;
+      z-index: 1; 
+    }
+    
+    .modal-image.zoomed { cursor: grab; }
+    .modal-image.dragging { cursor: grabbing; }
+
+    /* NÚT ĐÓNG */
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none;
+      color: white; font-size: 2rem; cursor: pointer;
+      z-index: 100; /* Luôn nằm trên cùng */
+    }
+
+    /* CHỮ CAPTION (Luôn nổi trên ảnh) */
+    .modal-caption {
+      position: absolute;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10; /* Cao hơn ảnh */
+      
+      font-family: 'Science Gothic', serif; font-size: 1.25rem;
+      color: #fff; text-align: center; white-space: nowrap;
+      
+      padding: 0.8rem 1.5rem; border-radius: 2rem;
+      background: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      border: 1px solid rgba(255, 255, 255, 0);
+      transition: all 0.2s ease; pointer-events: none;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .footer {
+      background: linear-gradient(to bottom, #000, #111);
+      padding: 5rem 2rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h3 {
+      /* Giữ nguyên mấy dòng cũ */
+      font-family: "Science Gothic", sans-serif; /* Hoặc font cũ của ông */
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: #10B981;
+      
+      /* THÊM DÒNG NÀY ĐỂ IN ĐẬM LÊN */
+      font-weight: 800; /* Độ đậm cực mạnh (Bold) */
+      letter-spacing: 0.5px; /* Giãn chữ ra xíu cho thoáng */
+      text-transform: uppercase; /* (Tùy chọn) Viết hoa toàn bộ cho uy tín */
+    }
+
+    .footer-section p {
+      color: #999;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #999;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #10B981;
+    }
+
+    /* --- ĐOẠN CSS SỬA MÀU ICON CHO SÁNG SỦA --- */
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-link {
+      /* Màu mặc định: Trắng sáng (cho dễ nhìn trên nền đen) */
+      color: #f8fafc; 
+      
+      /* Tạo cái vòng tròn nền kính mờ */
+      background: rgba(255, 255, 255, 0.1);
+      width: 45px;
+      height: 45px;
+      
+      /* Căn giữa icon */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      text-decoration: none; /* Bỏ gạch chân nếu có */
+    }
+
+    /* Hiệu ứng khi di chuột vào (HOVER) */
+    .social-link:hover {
+      /* Đổi sang màu Xanh Emerald chủ đạo */
+      color: #10B981; 
+      background: rgba(16, 185, 129, 0.15);
+      border-color: #10B981;
+      transform: translateY(-5px); /* Bay lên xíu */
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); /* Phát sáng */
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
+      }
+
+      .gallery-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+      .gallery-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+      .gallery-item:nth-child(6) { grid-column: span 1; grid-row: span 1; }
+    }
+  /* --- HIỆU ỨNG QUẢ CẦU KÍNH (GLASS SPHERES) --- */
+
+/* 1. Cấu hình chung cho các quả bóng */
+.glass-sphere {
+    position: absolute;
+    border-radius: 50%; /* Làm tròn vo */
+    filter: blur(80px); /* Làm nhòe đi để tạo cảm giác phát sáng ảo diệu */
+    z-index: 2; /* Nằm trên nền, dưới chữ */
+    opacity: 0.6; /* Mờ mờ nhân ảnh */
+    animation: floatSphere 10s infinite ease-in-out alternate; /* Hiệu ứng bay bổng */
+}
+
+/* 2. Quả số 1: Màu Tím Mộng Mơ (Góc trên trái) */
+.sphere-1 {
+    top: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(#f09433, #e6683c); /* Màu hoàng hôn */
+    animation-delay: 0s;
+}
+
+/* 3. Quả số 2: Màu Xanh Ngọc Bích (Góc dưới phải) */
+.sphere-2 {
+    bottom: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(#10B981, #0f172a); /* Xanh lá đặc trưng của web bạn */
+    animation-delay: -2s; /* Chạy lệch nhịp cho tự nhiên */
+}
+
+/* 4. Quả số 3: Màu Xanh Biển (Ở giữa lơ lửng) */
+.sphere-3 {
+    top: 40%;
+    left: 60%;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(#1E3A8A, #2563eb);
+    animation-delay: -4s;
+}
+
+/* 5. Tạo chuyển động bay lên bay xuống */
+@keyframes floatSphere {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(30px, 50px) rotate(20deg); }
+}
+
+/* --- CSS MỚI CHO PHẦN CHI TIẾT DÀI --- */
+    
+    .detail-subtitle {
+      font-family: 'Science Gothic', serif;
+      font-size: 1.25rem;
+      color: #fff;
+      margin-top: 1.5rem;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .detail-list {
+      list-style: none; /* Bỏ chấm tròn mặc định xấu xí */
+      padding: 0;
+    }
+
+    .detail-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+      color: #b3b3b3;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Tạo dấu gạch đầu dòng màu xanh Neon đẹp mắt */
+    .detail-list li::before {
+      content: '➤'; /* Hoặc dùng dấu • */
+      position: absolute;
+      left: 0;
+      color: #10B981; /* Màu xanh chủ đạo */
+      font-size: 0.8rem;
+      top: 4px;
+    }
+
+    .detail-list strong {
+      color: #f1f5f9; /* Chữ đậm màu sáng hơn */
+    }
+    
+    .detail-list em {
+      color: #10B981; /* Tên món ăn nghiêng màu xanh */
+      font-style: normal;
+    }
+/* ======================================================= */
+    /* --- CSS VERSION 3: SỐ TRÊN ẢNH - GLOW TO - KHÔNG BAY --- */
+    /* ======================================================= */
+
+    .details {
+      padding: 5rem 2rem;
+      position: relative;
+      z-index: 5;
+    }
+
+ /* ======================================================= */
+    /* --- CSS VERSION 4: GLOW BẰNG OPACITY (SIÊU MƯỢT) --- */
+    /* ======================================================= */
+
+    /* 1. KHUNG CHỨA (PARENT) */
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 2.5rem;
+      
+      padding: 3.5rem;
+      margin-bottom: 8rem;
+      
+      position: relative; 
+      overflow: visible; 
+      z-index: 1; /* Tạo lớp để glow nằm dưới */
+      
+      /* QUAN TRỌNG: Bỏ transition box-shadow đi, chỉ giữ border */
+      transition: border-color 0.3s ease; 
+    }
+
+    /* 2. TẠO LỚP ÁNH SÁNG ẢO (VẼ SẴN NHƯNG ẨN ĐI) */
+    .detail-row::before {
+      content: '';
+      position: absolute;
+      /* Phủ kín khung cha */
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 2.5rem; /* Bo góc y hệt khung cha */
+      
+      /* Đây là cái bóng sáng màu xanh đã được vẽ sẵn */
+      /* Mình tăng độ sáng lên xíu cho đã mắt */
+      box-shadow: 0 0 80px 5px rgba(16, 185, 129, 0.5); 
+      
+      opacity: 0; /* Mặc định là TẮT ĐÈN (Ẩn) */
+      z-index: -1; /* Nằm chìm sau lưng */
+      transition: opacity 0.3s ease; /* Hiệu ứng bật đèn mượt mà */
+    }
+
+    /* 3. KHI DI CHUỘT VÀO: BẬT ĐÈN (OPACITY 1) */
+    .detail-row:hover::before {
+      opacity: 1; /* Hiện lên ngay lập tức */
+    }
+
+    .detail-row:hover {
+      /* Chỉ đổi màu viền, không tính toán bóng đổ nữa -> HẾT LAG */
+      border-color: rgba(16, 185, 129, 0.8); 
+    }
+
+    .detail-row.reverse {
+      flex-direction: row-reverse;
+    }
+    .detail-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+/* 2. HÌNH ẢNH (CỐ ĐỊNH - KHÔNG PHÓNG TO NỮA) */
+    .detail-image-wrapper {
+      flex: 0.8; 
+      height: 450px; 
+      border-radius: 1.5rem;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 1; 
+    }
+
+    .detail-image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      /* Đã XÓA dòng transition transform để giảm tải cho trình duyệt */
+    }
+    
+    /* Đã XÓA hoàn toàn đoạn .detail-row:hover .detail-image { transform: scale... } 
+       => Ảnh sẽ đứng yên tuyệt đối, chỉ có khung ngoài phát sáng thôi.
+    */
+    /* 3. PHẦN CHỮ */
+    .detail-text {
+      flex: 1.2;
+      /* QUAN TRỌNG: Đổi sang static để số 01,02 không bị nhốt trong khung chữ nữa */
+      position: static; 
+      padding-left: 1rem;
+      z-index: 2;
+    }
+
+ /* ================================================= */
+    /* --- SỬA VỊ TRÍ SỐ & TẮT PHÓNG TO (BỚT LAG) --- */
+    /* ================================================= */
+
+    .detail-number {
+      position: absolute;
+      
+      /* 👉 [BẠN CHỈNH VỊ TRÍ Ở 2 DÒNG NÀY] 👈 */
+      top: 2rem;   /* Chỉnh số này để LÊN/XUỐNG (Số âm là lên trên) */
+      left: 5rem;   /* Chỉnh số này để SANG TRÁI/PHẢI */
+      
+      font-family: 'Science Gothic', sans-serif;
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      
+      /* Màu mặc định (Trong suốt + Viền trắng mờ) */
+      color: rgba(255, 255, 255, 0); 
+      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.6); 
+      
+      z-index: 10; 
+      pointer-events: none;
+      
+      /* Chỉ giữ lại transition màu sắc (bỏ transform để bớt lag) */
+      transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+      
+      /* Bóng nhẹ cho dễ đọc */
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+    }
+
+    /* Vị trí cho khung đảo ngược (số nằm bên phải) */
+    .detail-row.reverse .detail-number {
+      left: auto; 
+      right: 1rem; /* 👉 Chỉnh vị trí bên phải ở đây */
+    }
+
+    /* --- HIỆU ỨNG KHI DI CHUỘT VÀO --- */
+    .detail-row:hover .detail-number {
+      /* Chỉ đổi màu (Phát sáng) */
+      color: rgba(16, 185, 129, 0.2); 
+      -webkit-text-stroke: 2px #10B981; /* Viền chuyển sang xanh Neon */
+      
+      /* ĐÃ XÓA DÒNG 'transform: scale...' ĐỂ SỐ KHÔNG BỊ PHÓNG TO */
+    }
+    /* Typography & Nội dung */
+    .detail-text h3 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .detail-text .highlight {
+      color: #10B981;
+      font-size: 1.15rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      display: block;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .detail-text p {
+      color: #d4d4d4;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Responsive mobile */
+    @media (max-width: 900px) {
+      .detail-row, .detail-row.reverse {
+        flex-direction: column;
+        padding: 2rem;
+        gap: 2rem;
+      }
+      .detail-image-wrapper { width: 100%; height: 300px; }
+      
+      /* Mobile thì đưa số về lại góc cho gọn */
+      .detail-number { 
+        font-size: 5rem; 
+        top: 1rem; 
+        right: 1rem; 
+        left: auto; 
+      }
+      .detail-row.reverse .detail-number {
+         right: 1rem; 
+         left: auto;
+      }
+      
+      .detail-text h3 { font-size: 2rem; }
+    }
+    /* --- CSS CHO SÂN CHƠI TƯƠNG TÁC --- */
+ .playground {
+      position: relative;
+      width: 100%;
+      height: 60vh; 
+      background: #000; /* Đảm bảo nền đen trùng với phần trên */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      /* Đã XÓA dòng border-top để không còn vạch ngăn cách */
+      /* Chỉ giữ lại border-bottom nếu thích */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      
+      /* Thêm cái này để phần chuyển tiếp mượt mà hơn nữa (Optional) */
+      mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+    }
+
+    #particleCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .playground-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      pointer-events: none; /* Chuột xuyên qua chữ */
+      mix-blend-mode: exclusion; /* Màu chữ hòa trộn */
+    }
+
+    .playground-text h2 {
+      font-family: 'Science Gothic', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+.playground-text p {
+      color: #10B981;
+      font-size: 1.5rem;       
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.8); 
+      
+      margin-top: 1rem;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      /* 👇 THÊM DÒNG NÀY VÀO ĐÂY 👇 */
+      gap: 15px; /* Tạo khoảng cách 15px giữa chữ ĐI và phần còn lại */
+    }
+    
+    @media (max-width: 768px) {
+        .playground-text h2 { font-size: 2rem; }
+    }
+    /* --- HIỆU ỨNG CON TRỎ NHẤP NHÁY --- */
+ .cursor {
+      display: inline-block;
+      width: 3px;  /* Độ dày con trỏ */
+      height: 1.2em; /* Chiều cao con trỏ (quan trọng để nó hiện ra khi thẻ rỗng) */
+      background-color: #10B981; 
+      animation: blink 1s infinite;
+      margin-left: 5px;
+      vertical-align: text-bottom; /* Căn đáy cho thẳng hàng */
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    #typing-text {
+      color: #10B981;
+      font-size: 1.5rem; 
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); 
+    }
+    /* --- CSS CHO PRELOADER (MÀN HÌNH CHỜ) --- */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000; /* Nền đen */
+      z-index: 99999; /* Luôn nằm trên cùng */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 60px; height: 60px;
+      margin: 0 auto 20px auto;
+      border: 5px solid rgba(16, 185, 129, 0.2);
+      border-top: 5px solid #10B981; /* Màu xanh Neon */
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loader-content p {
+      color: #10B981;
+      font-family: 'Science Gothic', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Khi web tải xong thì ẩn đi */
+    body.loaded #preloader {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+/* --- CSS PHẦN TÁC GIẢ (V4 - ĐÃ FIX LỖI) --- */
+    .author-section {
+        padding: 100px 20px;
+        background-color: transparent; /* Fix lỗi màu: Trong suốt để hiện màu nền đen của body */
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .author-section .section-header {
+        margin-bottom: 40px;
+    }
+
+    /* Tên tác giả */
+    .author-main-name {
+        font-family: "Science Gothic", sans-serif;
+        font-size: 5rem; 
+        font-weight: 800;
+        text-transform: uppercase;
+        
+        /* Màu chữ trắng viền xanh nhẹ */
+        color: #fff;
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5); 
+        
+        margin: 20px 0 60px 0;
+        letter-spacing: -2px;
+        line-height: 1;
+        
+        /* Fix lỗi mất tên: Animation */
+        opacity: 0; 
+        animation: moveUp 2.5s ease-out forwards;
+        animation-delay: 0.2s; /* Chờ 0.2s sau khi lướt tới mới hiện */
+    }
+
+    /* Khung chứa thông tin nhảy chữ */
+    .author-info-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 40px; /* Khoảng cách giữa các mục */
+    }
+
+    .hacker-text {
+        font-family: "Courier New", monospace;
+        font-size: 1.3rem; /* Chữ to hơn chút cho dễ đọc */
+        color: #94a3b8;
+        font-weight: bold;
+        min-width: 120px;
+    }
+    
+    .hacker-text span {
+        color: #10B981; /* Màu xanh cho kết quả cuối cùng */
+    }
+
+    /* QUAN TRỌNG: Đây là lý do tên bạn bị mất lúc nãy (thiếu đoạn này) */
+    @keyframes moveUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .author-main-name { font-size: 3rem; }
+        .author-info-row { flex-direction: column; gap: 20px; }
+    
+    }
+    /* --- FIX LỖI TRƯỢT (Scroll Margin) --- */
+    /* Dòng này giúp web khi trượt đến mục nào thì dừng lại cách mép trên 120px */
+    #destinations, 
+    #sauthamdongnai, 
+    #gallery {
+        scroll-margin-top: 120px; 
+    }
+  
+  </style>
+</head>
+<body>
+<div id="preloader">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p>ĐANG KẾT NỐI VŨ TRỤ...</p>
+    </div>
+  </div>
+
+  <section class="hero">
+    <span class="glass-sphere sphere-1"></span>
+    <span class="glass-sphere sphere-2"></span>
+    <span class="glass-sphere sphere-3"></span>
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>ĐỒNG NAI</h1>
+      <div class="hero-divider"></div>
+      <p>VIÊN NGỌC CỦA ĐẠI NGÀN</p>
+      <div class="hero-subtitle">Nơi dòng chảy vỗ về rừng già và thì thầm những câu chuyện ngàn năm.</div>
+    </div>
+    <div class="scroll-indicator">
+      <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+
+  <section class="author-section" id="author">
+      <div class="about-container">
+          <div class="section-header">
+              <h2>ĐƯỢC KIẾN TẠO BỞI</h2>
+              <div class="divider"></div>
+          </div>
+
+          <div class="author-main-name">TRẦN ĐÌNH LÊ CHIẾN</div>
+
+          <div class="author-info-row">
+              <div class="hacker-text" data-value="07/12/2007">loading...</div>
+              <div class="hacker-text" data-value="Hà Tĩnh">loading...</div>
+              <div class="hacker-text" data-value="Lớp 12A1">loading...</div>
+              <div class="hacker-text" data-value="THPT Huỳnh Văn Nghệ">loading...</div>
+          </div>
+      </div>
+  </section>
+
+  <section class="about">
+    <div class="about-container">
+      <div class="section-header">
+        <h2>Hành Trình Đang Chờ Đợi</h2>
+        <div class="divider"></div>
+        <p>Đồng Nai tựa một thứ thơ chảy tràn trong tim Việt Nam, nơi rừng thẳm gặp gỡ nước trong. Ở đây, thời gian trôi chậm lại, nhường chỗ cho những lời kể của thiên nhiên vọng về từ quá khứ.</p>
+      </div>
+
+      <div class="features-grid">
+        <a href="#destinations" class="feature-card">
+          <div class="feature-icon">🧭</div>
+          <h3>Khám Phá</h3>
+          <p>Lạc bước vào những vùng đất hoang sơ và tìm thấy những kho báu ẩn giấu.</p>
+        </a>
+
+        <a href="#sauthamdongnai" class="feature-card">
+          <div class="feature-icon">❤️</div>
+          <h3>Trải Nghiệm</h3>
+          <p>Đắm mình trong bản sắc văn hóa và vẻ đẹp kỳ vĩ của tạo hóa.</p>
+        </a>
+
+        <a href="#gallery" class="feature-card">
+          <div class="feature-icon">📷</div>
+          <h3>Lưu Giữ</h3>
+          <p>Gói ghém những ký ức tuyệt đẹp sẽ theo bạn suốt cuộc đời.</p>
+        </a>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="destinations" id="destinations">
+    <div class="about-container">
+      <div class="section-header">
+        <h2>Chạm Vào Thiên Đường</h2>
+        <div class="divider"></div>
+        <p>Ba mảnh ghép hoàn hảo của bức tranh thiên nhiên và cuộc sống Đồng Nai, mỗi nơi một vẻ đẹp độc bản.</p>
+      </div>
+
+      <div class="destinations-grid" id="sauthamdongnai">
+        <div class="destination-card" data-color="emerald">
+          <div class="card-inner"> 
+            
+            <div class="destination-image" style="background-image: url('a1.png');"></div>
+            <div class="destination-overlay"></div>
+            <div class="destination-content">
+              <div class="destination-icon">🌲</div>
+              <div class="destination-info">
+                <div class="destination-title">Nam Cát Tiên</div>
+                <div class="destination-description">Lá phổi xanh nguyên sinh, nơi sự sống hoang dã phô diễn vẻ đẹp thuần khiết nhất !</div>
+              </div>
+            </div>
+
+          </div> </div>
+
+        <div class="destination-card" data-color="river">
+          <div class="card-inner">
+            
+            <div class="destination-image" style="background-image: url('a6.png');"></div>
+            <div class="destination-overlay"></div>
+            <div class="destination-content">
+              <div class="destination-icon">🌊</div>
+              <div class="destination-info">
+                <div class="destination-title">Hồ Trị An</div>
+                <div class="destination-description">Mặt gương khổng lồ phản chiếu bầu trời, nơi bình yên chạm ngõ những chuyến đi !</div>
+              </div>
+            </div>
+
+          </div> </div>
+
+        <div class="destination-card" data-color="sunset">
+           <div class="card-inner">
+
+            <div class="destination-image" style="background-image: url('a7.png');"></div>
+            <div class="destination-overlay"></div>
+            <div class="destination-content">
+              <div class="destination-icon">⛩️</div>
+              <div class="destination-info">
+                <div class="destination-title">Biên Hòa City</div>
+                <div class="destination-description">Thủ phủ công nghiệp năng động. Nơi nhịp sống hối hả hòa quyện cùng ánh đèn đô thị rực rỡ !</div>
+              </div>
+            </div>
+
+          </div> </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="details">
+    <div class="about-container">
+      
+      <div class="section-header">
+        <h2>Sâu Thẳm Đồng Nai</h2>
+        <div class="divider"></div>
+        <p>Mỗi vùng đất là một chương sách dày, chứa đựng những bí mật của rừng già, của dòng sông và của lịch sử hào hùng chờ bạn lật mở.</p>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-image-wrapper">
+          <div class="detail-image" style="background-image: url('a1.png');"></div>
+          <div class="detail-glow"></div>
+        </div>
+        <div class="detail-text">
+          <div class="detail-number">01</div>
+          <h3>Vườn Quốc Gia Nam Cát Tiên</h3>
+          <p class="highlight">"Lá phổi xanh khổng lồ & Khu dự trữ sinh quyển thế giới"</p>
+          
+          <p>Nằm trải dài trên 3 tỉnh nhưng phần hồn cốt đẹp nhất nằm tại Đồng Nai. Với diện tích hơn 71.000ha, đây là "thánh địa" cho những ai khao khát chạm vào thiên nhiên nguyên bản, nơi ngự trị của những cây Tùng đại thụ 400 năm tuổi và hàng trăm loài động vật quý hiếm trong Sách Đỏ.</p>
+          
+          <h4 class="detail-subtitle">🔥 Trải nghiệm không thể bỏ lỡ:</h4>
+          <ul class="detail-list">
+            <li><strong>Trekking Bàu Sấu:</strong> Đi bộ xuyên rừng già 5km để đến "vương quốc cá sấu". Khoảnh khắc hoàng hôn buông xuống mặt bàu nước tĩnh lặng là trải nghiệm siêu thực nhất bạn từng thấy.</li>
+            <li><strong>Tour xem thú đêm (Night Safari):</strong> Ngồi xe mui trần chuyên dụng đi soi thú hoang dã kiếm ăn ban đêm. Bạn sẽ thấy nai, hoẵng, lợn rừng hay bò tót ngay trước mắt mình.</li>
+            <li><strong>Thăm Trạm Cứu Hộ Gấu & Linh Trưởng:</strong> Nơi nuôi dưỡng và phục hồi bản năng hoang dã cho những chú gấu và vượn từng bị nuôi nhốt, một trải nghiệm giáo dục đầy nhân văn.</li>
+            <li><strong>Đạp xe xuyên rừng & Thác Trời:</strong> Những con đường mòn rợp bóng cây cổ thụ, tiếng chim hót vang trời dẫn lối đến ghềnh Thác Trời tung bọt trắng xóa.</li>
+            <li><strong>Tham quan di tích lịch sử Chiến Khu D</strong> Nơi lịch sử vẫn còn lại những dấu ấn âm vang mãi trường tồn với thời gian.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="detail-row reverse">
+        <div class="detail-image-wrapper">
+          <div class="detail-image" style="background-image: url('a6.png');"></div>
+          <div class="detail-glow"></div>
+        </div>
+        <div class="detail-text">
+          <div class="detail-number">02</div>
+          <h3>Hồ Trị An & Rừng Mã Đà</h3>
+          <p class="highlight">"Tuyệt tác nhân tạo & Liều thuốc chữa lành tâm hồn"</p>
+          
+          <p>Là hồ nhân tạo lớn nhất miền Nam, Trị An không chỉ cung cấp điện năng mà còn là chiếc điều hòa tự nhiên khổng lồ. Mặt hồ rộng mênh mông như biển, phẳng lặng như gương, kết hợp với Rừng Mã Đà và Chiến Khu Đ tạo nên bức tranh thủy mặc hữu tình.</p>
+          
+          <h4 class="detail-subtitle">⛺ Chill cùng thiên nhiên:</h4>
+          <ul class="detail-list">
+            <li><strong>Camping & Glamping ven hồ:</strong> Cắm trại qua đêm, đốt lửa trại BBQ và ngắm bầu trời đầy sao - thứ xa xỉ mà thành phố không bao giờ có được.</li>
+            <li><strong>Chèo SUP đón bình minh:</strong> Khoảnh khắc mặt trời đỏ rực nhô lên từ mặt nước mờ sương, chèo thuyền nhẹ nhàng giữa dòng nước êm đềm là lúc Trị An đẹp ma mị nhất.</li>
+            <li><strong>Khám phá Đảo Ó - Đồng Trường:</strong> Hai hòn đảo xanh mướt nằm biệt lập giữa lòng hồ, nơi lý tưởng để tổ chức picnic, câu cá và tận hưởng sự yên tĩnh tuyệt đối.</li>
+            <li><strong>Ẩm thực hào sảng:</strong> Nhất định phải thử đặc sản <em>Cá Lăng nướng muối ớt</em>, <em>Gỏi xoài khô cá kìm</em>, <em>Cơm lam gà nướng</em> và <em>Tép đồng um cuốn bánh tráng</em>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-image-wrapper">
+          <div class="detail-image" style="background-image: url('a7.png');"></div>
+          <div class="detail-glow"></div>
+        </div>
+        <div class="detail-text">
+          <div class="detail-number">03</div>
+          <h3>Thành Phố Biên Hòa</h3>
+          <p class="highlight">"Vùng đất 325 năm văn hiến & Nhịp sống hiện đại"</p>
+          
+          <p>Trước khi Sài Gòn trở thành "Hòn ngọc Viễn Đông", Biên Hòa (trấn Biên Hòa) đã là một thương cảng sầm uất bậc nhất. Ngày nay, nơi đây là sự giao thoa thú vị giữa nhịp sống công nghiệp hối hả và những trầm tích văn hóa lịch sử sâu sắc của vùng đất Đồng Nai.</p>
+          
+          <h4 class="detail-subtitle">🏙️ City Tour & Văn Hóa:</h4>
+          <ul class="detail-list">
+            <li><strong>KDL Bửu Long:</strong> Được mệnh danh là "Vịnh Hạ Long trên cạn" với hồ Long Ẩn xanh biếc, chùa Bửu Phong cổ kính và những vách đá dựng đứng check-in cực nghệ.</li>
+            <li><strong>Văn Miếu Trấn Biên:</strong> Văn miếu đầu tiên của xứ Đàng Trong (xây dựng năm 1715), nơi tôn vinh truyền thống hiếu học với kiến trúc cung đình mái ngói cong vút tuyệt đẹp.</li>
+            <li><strong>Làng Gốm Biên Hòa & Chùa Ông:</strong> Ghé thăm làng nghề gốm sứ trăm năm tuổi lừng danh và Chùa Ông (Thất Phủ Cổ Miếu) trên Cù Lao Phố với kiến trúc Hoa độc đáo.</li>
+            <li><strong>KDL Vườn Xoài:</strong> Điểm đến giải trí xanh mát với vườn thú bán hoang dã, trượt cỏ và các trò chơi vận động hấp dẫn ngay gần trung tâm.</li>
+            <li><strong>Foodtour Biên Hòa:</strong> Thiên đường ăn vặt với <em>Gỏi cá Tân Mai</em>, <em>Lẩu tôm 5 Ri</em>, <em>Chả lụi Biên Hòa</em> và đặc biệt là <em>Gỏi bưởi Tân Triều</em> trứ danh.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <div class="about-container">
+      <div class="section-header">
+        <h2>Khoảnh Khắc Ngưng Đọng</h2>
+        <div class="divider"></div>
+        <p>Một hành trình thị giác qua những cảnh sắc mê hoặc lòng người.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image: url('a5.png');" data-photo="Lời thì thầm của gió">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Lời thì thầm của gió</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a23.png');" data-photo="Lũ cá lội suối">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Lũ cá lội suối</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a24.png');" data-photo="Nghề nông thẳng tiến 🎀">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Chốn nghề nông</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a11.jpg');" data-photo="Chàng cá tiên mắc cạn 🤮">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Hòa tan cùng dòng nước</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a26.png');" data-photo="Khi các anh nông dân làm ruộng">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Đi cấy</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a12.jpg');" data-photo="Lạc Trôi Giữa Đường 🫠">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Boy Đồng Quê</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a14.jpg');" data-photo="Ôi ai chụp mà đẹp thế 😭">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Ánh nắng điện ảnh</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a42.jpeg');" data-photo="Lối mòn trong rừng 🌳">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Lối mòn trong rừng</div>
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a17.jpg');" data-photo="Chiều tà trong rừng">
+          <div class="gallery-overlay"><div class="gallery-caption">Chiều tà trong rừng</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a39.jpg');" data-photo="Đói+Khát= đi chiến khu Đ 🍔">
+          <div class="gallery-overlay"><div class="gallery-caption">Bữa cơm hoang dã</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a43.jpeg');" data-photo="Chim Muông Ca Hát">
+          <div class="gallery-overlay"><div class="gallery-caption">Chim Muông Ca Hát</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a29.png');" data-photo="Suối Mơ">
+          <div class="gallery-overlay"><div class="gallery-caption">Suối Mơ</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a19.jpeg');" data-photo="Đỉnh Núi Mây Mù">
+          <div class="gallery-overlay"><div class="gallery-caption">Đỉnh Núi Mây Mù</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a40.jpeg');" data-photo="Núi rừng sâu thẳm">
+          <div class="gallery-overlay"><div class="gallery-caption">Núi rừng sâu thẳm</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a36.png');" data-photo="Chiều Tà Bên Hồ">
+          <div class="gallery-overlay"><div class="gallery-caption">Chiều Tà Bên Hồ</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a18.jpeg');" data-photo="Hóa thú 😭">
+          <div class="gallery-overlay"><div class="gallery-caption">Hòa mình với thiên nhiên</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a38.png');" data-photo="Sắc Thu Đồng Nai">
+          <div class="gallery-overlay"><div class="gallery-caption">Sắc Thu Đồng Nai</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a44.jpeg');" data-photo="Dấu Ấn Thời Gian">
+          <div class="gallery-overlay"><div class="gallery-caption">Dấu Ấn Thời Gian</div></div>
+        </div>
+        <div class="gallery-item" style="background-image: url('a50.jpg');" data-photo="Ngôi Nhà Hạnh Phúc">
+          <div class="gallery-overlay"><div class="gallery-caption">Ngôi Nhà Hạnh Phúc</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a52.jpg');" data-photo="Bản Giao Hưởng Xanh 🌿">
+          <div class="gallery-overlay"><div class="gallery-caption">Bản Giao Hưởng Xanh 🌿🌿🌿</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a46.jpg');" data-photo="Góc Nhìn Trên Cao">
+          <div class="gallery-overlay"><div class="gallery-caption">Góc Nhìn Trên Cao</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a48.jpeg');" data-photo="Những Ngày Tháng Ấy...">
+          <div class="gallery-overlay"><div class="gallery-caption">Những Ngày Tháng Ấy...</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a49.jpeg');" data-photo="Mùa Thay Lá">
+          <div class="gallery-overlay"><div class="gallery-caption">Mùa Thay Lá</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a54.jpeg');" data-photo="Ánh Sáng Cuối Rừng 🔥">
+          <div class="gallery-overlay"><div class="gallery-caption">Ánh Sáng Cuối Rừng</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a53.jpg');" data-photo="Bản Ca Hùng Tráng 🥰">
+          <div class="gallery-overlay"><div class="gallery-caption">Vẻ Đẹp Tráng Ca</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a51.jpg');" data-photo="Dòng Sông Ký Ức 🥹">
+          <div class="gallery-overlay"><div class="gallery-caption">Dòng Sông Ký Ức</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a55.jpeg');" data-photo="Hoa Cỏ Ven Đường">
+          <div class="gallery-overlay"><div class="gallery-caption">Hoa Cỏ Ven Đường</div></div>
+        </div>
+
+        <div class="gallery-item" style="background-image: url('a45.jpeg');" data-photo="YESSSS 😭😍🥰">
+          <div class="gallery-overlay"><div class="gallery-caption">Còn Gì Tuyệt Hơn !</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="galleryModal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    
+    <div class="modal-content">
+      <div class="modal-frame">
+        <img class="modal-image" id="modalImage" src="" alt="">
+        <div class="modal-caption" id="modalCaption"></div>
+      </div>
+    </div>
+  </div>
+<section class="playground">
+    <canvas id="particleCanvas"></canvas>
+    <div class="playground-text">
+      <h2>TÍN HIỆU VŨ TRỤ !</h2>
+      
+      <p>
+        ĐI <span id="typing-text"></span><span class="cursor"></span>
+      </p>
+      
+    </div>
+  </section>
+<footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Đồng Nai</h3>
+        <p>Khám phá vẻ đẹp tiềm ẩn nơi sông suối hòa ca cùng rừng già và những bí mật ngàn năm.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Điểm Đến</h3>
+        <ul class="footer-links">
+          <li><a href="#destinations">Nam Cát Tiên</a></li>
+          <li><a href="#destinations">Hồ Trị An</a></li>
+          <li><a href="#destinations">Thành Phố Biên Hòa</a></li>
+          <li><a href="#destinations">Trải Nghiệm</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Liên Kết</h3>
+        <ul class="footer-links">
+          <li><a href="https://www.facebook.com/trandinhlechien127" target="_blank">Về Chiến</a></li>
+          <li><a href="https://www.instagram.com/trandinhlechien/" target="_blank">Liên Hệ Chiến</a></li>
+          <li><a href="https://www.instagram.com/trandinhlechien/" target="_blank">Nhờ Chiến tư vấn</a></li>
+          <li><a href="https://www.instagram.com/trandinhlechien/" target="_blank">Chính sách học phí thầy Chiến</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+    <h3>Kết Nối</h3>
+    <div class="social-links">
+        
+        <a class="social-link" href="https://www.facebook.com/trandinhlechien127" title="Facebook" target="_blank">
+            <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+        </a>
+
+        <a class="social-link" href="https://www.instagram.com/trandinhlechien/" title="Instagram" target="_blank">
+            <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069-3.204 0-3.584-.012-4.849-.069-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+
+        <a class="social-link" href="https://www.threads.net/@trandinhlechien" title="Threads" target="_blank">
+            <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                <path d="M12.002 2.002c-5.522 0-9.998 4.476-9.998 9.998 0 5.522 4.476 9.998 9.998 9.998 5.522 0 9.998-4.476 9.998-9.998 0-5.522-4.476-9.998-9.998-9.998zm0 18.598c-4.742 0-8.6-3.858-8.6-8.6 0-4.742 3.858-8.6 8.6-8.6 4.742 0 8.6 3.858 8.6 8.6 0 4.742-3.858 8.6-8.6 8.6zm.57-4.144c-1.84 0-3.155-1.12-3.155-3.087 0-2.193 1.572-3.84 3.96-3.84 1.48 0 2.502.668 2.85 1.516h1.564c-.456-1.742-2.148-2.902-4.414-2.902-3.23 0-5.522 2.294-5.522 5.252 0 2.864 2.222 5.166 5.378 5.166 1.498 0 2.686-.482 3.518-1.2l-1.026-1.144c-.53.46-1.428.816-2.428.816-.92 0-1.748-.28-2.296-.642l1.58-1.01c.71-.456 1.464-.72 2.234-.72 1.346 0 2.126.96 2.126 2.138v.208c0 1.956-1.114 3.192-3.158 3.192-1.282 0-2.228-.538-2.73-1.39l-1.386.72c.792 1.35 2.232 2.08 4.142 2.08 3.134 0 4.71-2.022 4.71-4.664v-1.126h-1.62c-.01.522-.01 1.05-.01 1.584 0 1.054-.834 1.834-1.928 1.834z"/>
+            </svg>
+        </a>
+
+    </div>
+</div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Dòng Chảy Đồng Nai. Được tạo nên bởi Leeo bằng cả trái tim.</p>
+    </div>
+  </footer>
+
+  <script>
+/* --- KỊCH BẢN LOAD WEB: MÀN ĐEN TAN -> CHỮ NHẢY LOẠN XẠ --- */
+    window.addEventListener('load', () => {
+      
+      // BƯỚC 1: Web tải xong, nhưng giữ màn hình đen thêm 2 GIÂY cho hồi hộp
+      setTimeout(() => {
+        
+        // BƯỚC 2: Bắt đầu làm mờ màn hình đen (Preloader)
+        document.body.classList.add('loaded');
+        
+        // BƯỚC 3: Đợi màn hình đen mờ hẳn (800ms) rồi mới cho chữ xuất hiện
+        setTimeout(() => {
+            
+            // --- KÍCH HOẠT HIỆU ỨNG CHỮ NHẢY ---
+            const h1 = document.querySelector(".hero h1");
+            const p = document.querySelector(".hero p");
+            const sub = document.querySelector(".hero-subtitle");
+            const heroSection = document.querySelector(".hero");
+
+            // Bật hiển thị các thành phần phụ (gạch ngang, mũi tên)
+            if(heroSection) heroSection.classList.add('hero-active');
+
+            // a. Tiêu đề "ĐỒNG NAI" - Nhảy ngay
+            if(h1) {
+                h1.style.opacity = "1"; 
+                hackerEffect(h1, 7000); // Nhảy trong 7 giây
+            }
+
+            // b. Dòng phụ "VIÊN NGỌC..." - Chờ 200ms rồi nhảy
+            if(p) {
+                setTimeout(() => {
+                    p.style.opacity = "1";
+                    hackerEffect(p, 5000);
+                }, 200);
+            }
+
+            // c. Subtitle - Chờ 500ms rồi nhảy
+            if(sub) {
+                setTimeout(() => {
+                    sub.style.opacity = "1";
+                    hackerEffect(sub, 6000);
+                }, 500);
+            }
+
+        }, 800); // Thời gian chờ lớp màn đen biến mất (khớp với CSS transition)
+
+      }, 1000); // Thời gian Delay ban đầu (2 giây)
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '-50px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Observe destination cards
+    document.querySelectorAll('.destination-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Observe gallery items
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      observer.observe(item);
+    });
+
+/* --- MODAL LOGIC FINAL: KHUNG BO GÓC & CHỮ NỔI --- */
+    const modal = document.getElementById('galleryModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    let scale = 1;
+    let pointX = 0; let pointY = 0;
+    let startX = 0; let startY = 0;
+    let isDragging = false;
+
+    // 1. Mở Modal
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        // Lấy link ảnh chuẩn
+        let style = item.style.backgroundImage;
+        let imageUrl = style.slice(4, -1).replace(/"/g, "");
+        const caption = item.dataset.photo;
+
+        modalImage.src = imageUrl;
+        modalCaption.textContent = caption;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        resetZoom();
+      });
+    });
+
+    // 2. Reset trạng thái
+    function resetZoom() {
+        scale = 1; pointX = 0; pointY = 0;
+        updateTransform();
+        updateCaptionGlass(); 
+        modalImage.classList.remove('zoomed', 'dragging');
+    }
+
+    // 3. Đóng Modal
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    
+    const closeBtn = document.querySelector('.modal-close');
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    // --- ĐÓNG MODAL KHI CLICK RA NGOÀI (SỬA LẠI) ---
+    modal.addEventListener('click', (e) => {
+      // Logic: Nếu cái thứ mình đang bấm vào KHÔNG PHẢI là cái khung ảnh (.modal-frame)
+      // VÀ cũng KHÔNG PHẢI là cái ảnh hay chữ bên trong nó...
+      // ...thì tức là mình đang bấm ra ngoài -> ĐÓNG!
+      
+      if (!e.target.closest('.modal-frame')) {
+        closeModal();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // --- ZOOM (Lăn chuột) ---
+    // Lắng nghe trên .modal-frame để nhạy hơn
+    const modalFrame = document.querySelector('.modal-frame');
+    
+    if(modalFrame) {
+        modalFrame.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = -e.deltaY;
+            (delta > 0) ? (scale *= 1.1) : (scale /= 1.1);
+
+            if (scale < 1) scale = 1;
+            if (scale > 5) scale = 5; // Max zoom 5x
+
+            updateTransform();
+            updateCaptionGlass();
+        }, { passive: false });
+    }
+
+    // --- KÉO THẢ (Pan) ---
+    modalImage.addEventListener('mousedown', (e) => {
+        if (scale > 1) { 
+            isDragging = true;
+            startX = e.clientX - pointX;
+            startY = e.clientY - pointY;
+            modalImage.classList.add('dragging');
+            e.preventDefault(); 
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        pointX = e.clientX - startX;
+        pointY = e.clientY - startY;
+        updateTransform();
+        updateCaptionGlass();
+    });
+
+    window.addEventListener('mouseup', () => {
+        isDragging = false;
+        modalImage.classList.remove('dragging');
+    });
+
+    function updateTransform() {
+        modalImage.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+        
+        if (scale > 1) {
+            modalImage.classList.add('zoomed'); 
+        } else {
+            modalImage.classList.remove('zoomed'); 
+            pointX = 0; pointY = 0;
+            modalImage.style.transform = `translate(0px, 0px) scale(1)`;
+        }
+    }
+
+    // --- HIỆU ỨNG KÍNH CHO CHỮ (MỚI) ---
+    function updateCaptionGlass() {
+        const imgRect = modalImage.getBoundingClientRect();
+        const capRect = modalCaption.getBoundingClientRect();
+        
+        // Tính độ chồng lấn: Đáy ảnh - Đỉnh chữ
+        const overlap = imgRect.bottom - capRect.top;
+        const captionHeight = capRect.height;
+        
+        if (overlap > 0) {
+            // Ảnh trùm lên chữ -> Hiện kính
+            let progress = Math.min(overlap / captionHeight, 1);
+            
+            modalCaption.style.background = `rgba(0, 0, 0, ${0.45 * progress})`;
+            modalCaption.style.backdropFilter = `blur(${15 * progress}px)`;
+            modalCaption.style.webkitBackdropFilter = `blur(${15 * progress}px)`;
+            modalCaption.style.border = `1px solid rgba(255, 255, 255, ${0.3 * progress})`;
+            modalCaption.style.textShadow = `0 2px 10px rgba(0,0,0, ${0.8 * progress})`;
+        } else {
+            // Ảnh chưa chạm chữ -> Trong suốt
+            modalCaption.style.background = 'rgba(255, 255, 255, 0)';
+            modalCaption.style.backdropFilter = 'blur(0px)';
+            modalCaption.style.webkitBackdropFilter = 'blur(0px)';
+            modalCaption.style.border = '1px solid rgba(255, 255, 255, 0)';
+            modalCaption.style.textShadow = 'none';
+        }
+    }
+    /* --- HIỆU ỨNG HACKER GLITCH (PHIÊN BẢN SLOW MOTION - ÊM MẮT) --- */
+    
+    const hackerEffect = (element, duration) => {
+      const originalText = element.innerText;
+      // Giảm bớt số lượng ký tự lạ đi một chút cho đỡ rối mắt
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&@"; 
+      
+      let startTime = null;
+      let lastUpdate = 0; // Biến này dùng để "kìm hãm" tốc độ
+      
+      const animate = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        
+        // Tính tiến độ thời gian (0 -> 1)
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        
+        // --- QUAN TRỌNG: CƠ CHẾ GIẢM TỐC ---
+        // Chỉ thay đổi chữ sau mỗi 80ms (thay vì 16ms như trước)
+        // Con số 80 này làm cho hiệu ứng chậm lại, nhìn rất điện ảnh
+        if (timestamp - lastUpdate > 100) { 
+            lastUpdate = timestamp;
+
+            // CÔNG THỨC GIẢI MÃ TỪ GIỮA:
+            const center = originalText.length / 2;
+            // Mở rộng vùng hiển thị dần dần
+            const revealRadius = progress * (center + 5); 
+
+            element.innerText = originalText
+              .split("")
+              .map((letter, index) => {
+                const distanceFromCenter = Math.abs(index - center);
+                
+                // 1. Nếu nằm trong vùng an toàn -> Hiện chữ thật
+                if (distanceFromCenter < revealRadius) {
+                  return originalText[index];
+                }
+                
+                // 2. Giữ nguyên dấu cách (để câu không bị nhảy lung tung độ dài)
+                if (letter === ' ') return ' ';
+
+                // 3. Hiển thị ký tự rác (nhưng chậm rãi hơn)
+                return letters[Math.floor(Math.random() * letters.length)];
+              })
+              .join("");
+        }
+        
+        // Nếu chưa hết 5 giây thì chạy tiếp vòng lặp
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+            // Hết giờ -> Chốt hạ chữ chuẩn 100%
+            element.innerText = originalText; 
+        }
+      }
+      
+      requestAnimationFrame(animate);
+    }
+
+/* --- LOGIC TỔNG HỢP: LOADING -> FADE OUT -> CHẠY CHỮ --- */
+    window.addEventListener('load', () => {
+      
+      // 1. Giữ màn hình đen thêm 1 giây (1000ms)
+      setTimeout(() => {
+        
+        // 2. Bắt đầu làm mờ màn hình đen (Preloader)
+        document.body.classList.add('loaded');
+        
+        // 3. Đợi màn hình đen mờ hẳn (khoảng 800ms theo CSS) rồi mới cho chữ chạy
+        setTimeout(() => {
+            
+            // --- BẮT ĐẦU SHOW DIỄN HACKER EFFECT TẠI ĐÂY ---
+           
+
+        }, 800); // Đây là thời gian chờ cái màn hình đen nó tan biến hết
+
+      }, 2000); // Đây là thời gian delay 1s ban đầu
+    });
+
+      
+
+
+/* --- HIỆU ỨNG HẠT TỪ TÍNH (NATURAL FLOW FIX) --- */
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let particlesArray;
+    let isExploding = false; 
+    let explodeTimer = null; 
+
+    // Cấu hình chuột
+    let mouse = {
+      x: null,
+      y: null,
+      radius: 250,  
+      shield: 100   
+    }
+
+    window.addEventListener('mousemove', function(event) {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.x - rect.left;
+      mouse.y = event.y - rect.top;
+    });
+    
+    window.addEventListener('mousedown', function() {
+      isExploding = true;
+      if (explodeTimer) clearTimeout(explodeTimer);
+      // Nổ trong 1.5s
+      explodeTimer = setTimeout(() => {
+        isExploding = false;
+      }, 1600); 
+    });
+
+    window.addEventListener('mouseout', function() {
+        mouse.x = undefined;
+        mouse.y = undefined;
+        isExploding = false;
+    });
+
+    window.addEventListener('resize', function() {
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      init();
+    });
+
+    class Particle {
+      constructor(x, y, size, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+        this.baseX = x;
+        this.baseY = y;
+        this.density = (Math.random() * 10) + 2; 
+
+        this.angle = Math.random() * 360; 
+        this.wobbleSpeed = Math.random() * 0.02 + 0.005; 
+        this.wobbleDistance = Math.random() * 15 + 5;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      update() {
+        // 1. Luôn tính toán vị trí trôi nổi tự nhiên (Wobble) trước
+        this.angle += this.wobbleSpeed;
+        let targetX = this.baseX + Math.cos(this.angle) * this.wobbleDistance;
+        let targetY = this.baseY + Math.sin(this.angle) * this.wobbleDistance;
+
+        // 2. Tính toán khoảng cách chuột
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx*dx + dy*dy);
+        
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        
+        let maxDistance = mouse.radius;
+        // Tính lực (0 đến 1)
+        let force = (maxDistance - distance) / maxDistance;
+        if (force < 0) force = 0; 
+
+        let moveX = 0;
+        let moveY = 0;
+        
+        // Biến kiểm tra xem hạt này có đang bị tác động bởi chuột không
+        let isInteracting = false;
+
+        // --- A. TRƯỜNG HỢP: ĐANG TRONG VÙNG ẢNH HƯỞNG ---
+        if (distance < mouse.radius) {
+            isInteracting = true; // Đánh dấu là đang tương tác
+
+            // Nếu đang Click Nổ -> ĐẨY RA MẠNH
+            if (isExploding) {
+                 let blastPower = 12; // Lực nổ vừa phải
+                 moveX = -forceDirectionX * force * blastPower; 
+                 moveY = -forceDirectionY * force * blastPower;
+            }
+            // Nếu chỉ di chuột -> HÚT VÀO / ĐẨY NHẸ (SHIELD)
+            else {
+                if (distance < mouse.shield) {
+                    let pushForce = (mouse.shield - distance) / mouse.shield;
+                    moveX = -forceDirectionX * pushForce * this.density; 
+                    moveY = -forceDirectionY * pushForce * this.density;
+                } else {
+                    moveX = forceDirectionX * force * this.density; 
+                    moveY = forceDirectionY * force * this.density;
+                }
+            }
+        }
+        
+        // 3. QUYẾT ĐỊNH DI CHUYỂN (SỬA LỖI ĐỨNG HÌNH TẠI ĐÂY)
+        
+        if (isInteracting) {
+            // Nếu đang bị chuột tác động (Hút hoặc Nổ) -> Di chuyển theo lực chuột
+            this.x += moveX;
+            this.y += moveY;
+        } else {
+            // Nếu KHÔNG bị chuột tác động (Nằm ngoài vùng nổ hoặc chuột đi chỗ khác)
+            // -> Trôi nhẹ nhàng về vị trí Wobble (Hồi phục tự nhiên)
+            if (this.x !== targetX) {
+                let dx_home = this.x - targetX;
+                this.x -= dx_home/25; // Số càng lớn về càng chậm (mượt)
+            }
+            if (this.y !== targetY) {
+                 let dy_home = this.y - targetY;
+                this.y -= dy_home/25;
+            }
+        }
+        this.draw();
+      }
+    }
+
+    function init() {
+      particlesArray = [];
+      canvas.width = window.innerWidth;
+      canvas.height = document.querySelector('.playground').clientHeight;
+      
+      let baseParticles = (canvas.width * canvas.height) / 5000; 
+      
+      for (let i = 0; i < baseParticles * 2; i++) { 
+        let size = (Math.random() * 2) + 1;
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        
+        let heightPercent = y / canvas.height; 
+        if (Math.random() > Math.pow(heightPercent, 0.5)) {
+            continue; 
+        }
+
+        let color = Math.random() > 0.5 ? '#10B981' : 'rgba(255,255,255,0.3)';
+        particlesArray.push(new Particle(x, y, size, color));
+      }
+    }
+
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+      }
+    }
+
+    init();
+    animateParticles();
+   /* --- HIỆU ỨNG GÕ CHỮ (ĐÃ CẬP NHẬT) --- */
+    const typingElement = document.getElementById('typing-text');
+    const playgroundSection = document.querySelector('.playground'); 
+    
+    // Danh sách địa điểm (Lưu ý: Không cần chữ ĐI ở đầu nữa)
+    const phrases = [
+      "CHIẾN KHU Đ ĐI !!!",
+      "CHÈO SUP ĐI !!!",
+      "NAM CÁT TIÊN ĐI !!!",
+      "ĐÀ LẠT 3 NGÀY 3 ĐÊM ĐI !!!"
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+    let isStarted = false; 
+
+    function typeWriter() {
+      const currentPhrase = phrases[phraseIndex];
+
+      if (isDeleting) {
+        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typeSpeed = 50; 
+      } else {
+        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typeSpeed = 100; 
+      }
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typeSpeed = 2000; // Dừng 2 giây để dụ người ta đọc
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typeSpeed = 500; 
+      }
+
+      setTimeout(typeWriter, typeSpeed);
+    }
+
+    // Kích hoạt khi lướt tới
+    const observerPlayground = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !isStarted) {
+          isStarted = true;
+          typeWriter();
+        }
+      });
+    }, { threshold: 0.5 }); 
+
+    if(playgroundSection) {
+        observerPlayground.observe(playgroundSection);
+    }
+
+// --- HIỆU ỨNG HACKER LOẠN CHỮ (FIXED) ---
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+
+    function runHackerEffect(target) {
+        let iterations = 0;
+        const originalText = target.dataset.value; 
+        
+        // --- CHỈNH TỐC ĐỘ Ở ĐÂY ---
+        // Số càng nhỏ chạy càng nhanh (Mặc định 30ms)
+        // Nếu muốn chậm hơn thì sửa số 30 thành 50 hoặc 70
+        const interval = setInterval(() => {
+            target.innerText = originalText
+                .split("")
+                .map((letter, index) => {
+                    if (index < iterations) {
+                        return originalText[index];
+                    }
+                    return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+
+            if (iterations >= originalText.length) { 
+                clearInterval(interval);
+            }
+            
+            // Tốc độ giải mã từng ký tự (càng nhỏ càng mượt)
+            iterations += 1/2; 
+        }, 100); 
+    }
+
+    // --- LOGIC KÍCH HOẠT KHI LƯỚT TỚI ---
+    const authorSection = document.querySelector('.author-section');
+    const hackerTexts = document.querySelectorAll('.hacker-text');
+    const authorName = document.querySelector('.author-main-name'); // Lấy tên tác giả
+    
+    // Reset tên về ẩn để chờ hiệu ứng
+    if(authorName) {
+        authorName.style.animationPlayState = 'paused'; 
+    }
+
+    const authorObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // threshold: 0.5 nghĩa là lướt thấy 50% khung hình mới chạy
+            if (entry.isIntersecting) {
+                // 1. Chạy hiệu ứng tên bay lên
+                if(authorName) authorName.style.animationPlayState = 'running';
+
+                // 2. Chạy hiệu ứng loạn chữ
+                hackerTexts.forEach(text => {
+                    if (!text.classList.contains('done')) { // Chỉ chạy 1 lần
+                        runHackerEffect(text);
+                        text.classList.add('done');
+                    }
+                });
+                
+                // Ngắt theo dõi để không chạy lại nữa
+                authorObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 }); // <--- Sửa số này thành 0.3 nếu muốn chạy sớm hơn
+
+    if(authorSection) authorObserver.observe(authorSection);
+    
+    // (Giữ nguyên các đoạn script parallax cũ của bạn ở dưới nếu có...)
+  </script>
+</body>
+</html>
